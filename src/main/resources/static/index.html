@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AlgoPulse - Interactive Animated DSA Question Explanation Platform. Master Data Structures and Algorithms with real-time animations, synchronized Java code, dry runs, and quizzes.">
+  <meta name="keywords" content="DSA, Data Structures, Algorithms, Visualizer, Java, Spring Boot, Animation, LeetCode, Two Pointer, Binary Search, Dynamic Programming">
+  <meta name="author" content="AlgoPulse Team">
+  <title>AlgoPulse // Interactive Animated DSA Explanations</title>
+
+  <!-- Google Fonts: Inter, Outfit, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Application Stylesheets -->
+  <link rel="stylesheet" href="css/main.css?v=1.0.8">
+  <link rel="stylesheet" href="css/visualizer.css?v=1.0.8">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar" id="main-navbar">
+    <div class="container nav-container">
+      <a href="#/explore" class="nav-brand" data-view="explore">
+        <div class="brand-icon">&#10022;</div>
+        <div>
+          <span>Algo<span class="brand-gradient">Pulse</span></span>
+          <span class="nav-tag">DSA Studio</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#/explore" class="nav-link active" data-view="explore"><span>▦</span> Explore Problems</a></li>
+        <li><a href="#/workspace" class="nav-link" data-view="workspace" id="nav-live-studio"><span>🎬</span> Live Studio</a></li>
+        <li><a href="#/sandbox" class="nav-link" data-view="sandbox"><span>⚡</span> Visualizer Lab</a></li>
+        <li><a href="#/quizzes" class="nav-link" data-view="quizzes"><span>📝</span> Quizzes</a></li>
+        <li><a href="#/dashboard" class="nav-link" data-view="dashboard"><span>📊</span> My Progress</a></li>
+        <li><a href="#/admin" class="nav-link" data-view="admin" style="display: none;"><span>⚙️</span> Admin Portal</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn btn-primary btn-sm" id="btn-nav-add-question" title="Create a new animated question">+ Add Question</button>
+        <div id="nav-auth-actions" style="display: flex; gap: 0.5rem; align-items: center;"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Application Body -->
+  <main class="container">
+
+    <!-- =========================================================================
+         VIEW 1: EXPLORE PROBLEMS (QUESTION LISTING)
+         ========================================================================= -->
+    <section id="view-explore" class="view-section section">
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <h1 class="hero-title">
+          Master Algorithms Through <br>
+          <span class="brand-gradient">Interactive Animated Visualizations</span>
+        </h1>
+        <p class="hero-subtitle">
+          Step through DSA concepts with synchronized Java execution, live pointer tracking, dynamic variable inspectors, and comprehensive complexity breakdowns.
+        </p>
+
+        <!-- CTA Buttons in Hero -->
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" id="btn-hero-launch-first" style="font-size: 1rem; padding: 0.75rem 1.6rem;">
+            🎬 Watch Live Two-Sum Animation ➜
+          </button>
+          <button class="btn btn-secondary" id="btn-hero-add-question" style="font-size: 1rem; padding: 0.75rem 1.6rem;">
+            ➕ Add Custom Animated Question
+          </button>
+        </div>
+
+        <!-- Quick Platform Stats -->
+        <div class="hero-stats-row">
+          <div class="hero-stat-card">
+            <div class="hero-stat-value" id="hero-stat-total">16+</div>
+            <div class="hero-stat-label">DSA Questions</div>
+          </div>
+          <div class="hero-stat-card">
+            <div class="hero-stat-value" id="hero-stat-categories">12</div>
+            <div class="hero-stat-label">Core Topics</div>
+          </div>
+          <div class="hero-stat-card">
+            <div class="hero-stat-value">100%</div>
+            <div class="hero-stat-label">Animated Traces</div>
+          </div>
+          <div class="hero-stat-card">
+            <div class="hero-stat-value" id="hero-stat-solved">0</div>
+            <div class="hero-stat-label">Solved by You</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Live Demos Showcase -->
+      <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <h3 style="font-size: 1.15rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+              <span>🔥</span> Featured Live Interactive Visualizations
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Click any algorithm below to watch its animated dry run immediately:</p>
+          </div>
+          <span class="live-indicator"><span class="pulse-dot"></span> Click to View Live Visuals</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+          
+          <div class="featured-demo-card" data-slug="two-sum-sorted" style="background: var(--bg-surface); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: var(--radius-md); padding: 1rem; cursor: pointer; transition: all 0.2s ease;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span class="badge badge-easy">EASY</span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-cyan);">Two-Pointers</span>
+            </div>
+            <div style="font-weight: 700; color: #fff; margin-bottom: 0.4rem;">Two Sum II (Sorted Array)</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.8rem;">Watch left and right pointers converge inward to match the target sum.</div>
+            <button class="btn btn-primary btn-sm" style="width: 100%;">▶ Watch Animation ➜</button>
+          </div>
+
+          <div class="featured-demo-card" data-slug="binary-search" style="background: var(--bg-surface); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: var(--radius-md); padding: 1rem; cursor: pointer; transition: all 0.2s ease;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span class="badge badge-easy">EASY</span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-indigo);">Searching</span>
+            </div>
+            <div style="font-weight: 700; color: #fff; margin-bottom: 0.4rem;">Binary Search</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.8rem;">Watch search intervals bisect at mid with shaded eliminated zones.</div>
+            <button class="btn btn-primary btn-sm" style="width: 100%;">▶ Watch Animation ➜</button>
+          </div>
+
+          <div class="featured-demo-card" data-slug="reverse-linked-list" style="background: var(--bg-surface); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 1rem; cursor: pointer; transition: all 0.2s ease;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span class="badge badge-easy">EASY</span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-emerald);">Linked Lists</span>
+            </div>
+            <div style="font-weight: 700; color: #fff; margin-bottom: 0.4rem;">Reverse Linked List</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.8rem;">Watch prev, curr, next pointers flip pointer arrow directions in real time.</div>
+            <button class="btn btn-primary btn-sm" style="width: 100%;">▶ Watch Animation ➜</button>
+          </div>
+
+          <div class="featured-demo-card" data-slug="valid-parentheses" style="background: var(--bg-surface); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-md); padding: 1rem; cursor: pointer; transition: all 0.2s ease;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span class="badge badge-easy">EASY</span>
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-amber);">Stacks</span>
+            </div>
+            <div style="font-weight: 700; color: #fff; margin-bottom: 0.4rem;">Valid Parentheses</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.8rem;">Watch brackets push down into LIFO stack and pop out on matching pairs.</div>
+            <button class="btn btn-primary btn-sm" style="width: 100%;">▶ Watch Animation ➜</button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Filter and Search Bar -->
+      <div class="filter-bar">
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" class="search-input" placeholder="Search by problem title, keyword, algorithm (e.g. 'Two Sum', 'Binary Search', 'Sliding Window')...">
+        </div>
+
+        <!-- Topic Category Pills (Dynamic) -->
+        <div class="filter-pills-row" id="category-pills-row">
+          <span class="filter-label">Topic:</span>
+          <!-- Dynamic category pills injected here -->
+        </div>
+
+        <!-- Difficulty and Status Filters -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+          <div class="filter-pills-row">
+            <span class="filter-label">Difficulty:</span>
+            <div class="pill pill-difficulty active" data-difficulty="">All Levels</div>
+            <div class="pill pill-difficulty" data-difficulty="EASY"><span style="color:var(--accent-emerald)">●</span> Easy</div>
+            <div class="pill pill-difficulty" data-difficulty="MEDIUM"><span style="color:var(--accent-amber)">●</span> Medium</div>
+            <div class="pill pill-difficulty" data-difficulty="HARD"><span style="color:var(--accent-rose)">●</span> Hard</div>
+          </div>
+
+          <div class="filter-pills-row">
+            <span class="filter-label">Status:</span>
+            <div class="pill pill-status active" data-status="all">All</div>
+            <div class="pill pill-status" data-status="solved">Solved</div>
+            <div class="pill pill-status" data-status="in_progress">In Progress</div>
+            <div class="pill pill-status" data-status="bookmarked">★ Bookmarked</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Questions Cards Grid -->
+      <div class="questions-grid" id="questions-grid">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         VIEW 2: QUESTION WORKSPACE (DETAIL & VISUALIZATION STUDIO)
+         ========================================================================= -->
+    <section id="view-workspace" class="view-section section" style="display: none;">
+      <div class="workspace-container">
+        
+        <!-- Left Panel: Problem Information, Approaches, Code, Quiz -->
+        <div class="workspace-left-panel">
+          <div class="workspace-header">
+            <div class="workspace-title-row">
+              <h2 class="workspace-title" id="ws-question-title">Problem Title</h2>
+              <div class="workspace-actions">
+                <button class="btn btn-outline btn-sm" id="btn-workspace-bookmark">☆ Bookmark</button>
+                <select id="select-question-status" class="form-control" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.82rem;">
+                  <option value="NOT_STARTED">Not Started</option>
+                  <option value="IN_PROGRESS">In Progress</option>
+                  <option value="SOLVED">Mark Solved ✓</option>
+                </select>
+              </div>
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <span id="ws-question-difficulty" class="badge badge-medium">MEDIUM</span>
+              <span id="ws-question-category" class="badge badge-category">Arrays</span>
+              <a href="#/explore" class="btn btn-outline btn-sm" style="margin-left: auto;">← Back to Problems</a>
+            </div>
+          </div>
+
+          <!-- Navigation Tabs -->
+          <div class="workspace-tabs-nav">
+            <button class="workspace-tab-btn active" data-tab="problem"><span>📖</span> Problem</button>
+            <button class="workspace-tab-btn" data-tab="approaches"><span>💡</span> Approaches</button>
+            <button class="workspace-tab-btn" data-tab="solution"><span>☕</span> Java Solution</button>
+            <button class="workspace-tab-btn" data-tab="quiz"><span>📝</span> Quiz</button>
+            <button class="workspace-tab-btn" data-tab="notes"><span>✏️</span> My Notes</button>
+          </div>
+
+          <!-- Tab Contents -->
+          <div class="workspace-tab-content">
+            <!-- Tab 1: Problem Description -->
+            <div id="tab-problem" class="tab-pane active">
+              <p class="problem-statement-text" id="ws-problem-statement"></p>
+              
+              <h4 style="margin: 1.25rem 0 0.75rem; font-size: 1rem; color: var(--text-primary)">Examples</h4>
+              <div id="ws-examples-container"></div>
+
+              <div class="constraints-card">
+                <div class="constraints-title">Constraints</div>
+                <div class="constraints-list" id="ws-constraints-text"></div>
+              </div>
+            </div>
+
+            <!-- Tab 2: Approaches & Complexities -->
+            <div id="tab-approaches" class="tab-pane">
+              <!-- Optimized Approach -->
+              <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+                  <h4 style="color: var(--accent-emerald); font-size: 1.1rem;">⚡ Optimized Approach</h4>
+                  <div style="display: flex; gap: 0.5rem;">
+                    <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399;" id="ws-optimized-time">Time: O(n)</span>
+                    <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399;" id="ws-optimized-space">Space: O(1)</span>
+                  </div>
+                </div>
+                <p style="color: var(--text-primary); font-size: 0.92rem; line-height: 1.6;" id="ws-optimized-approach"></p>
+              </div>
+
+              <!-- Brute Force Approach -->
+              <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+                  <h4 style="color: var(--text-secondary); font-size: 1.05rem;">🐢 Brute-Force Approach</h4>
+                  <div style="display: flex; gap: 0.5rem;">
+                    <span class="badge" style="background: rgba(244, 63, 94, 0.15); color: #fb7185;" id="ws-brute-time">Time: O(n^2)</span>
+                    <span class="badge" style="background: rgba(244, 63, 94, 0.15); color: #fb7185;" id="ws-brute-space">Space: O(1)</span>
+                  </div>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;" id="ws-brute-approach"></p>
+              </div>
+            </div>
+
+            <!-- Tab 3: Java Solution Code -->
+            <div id="tab-solution" class="tab-pane">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                <select id="code-type-selector" class="form-control" style="width: auto; padding: 0.35rem 0.75rem; font-size: 0.85rem;">
+                  <option value="optimized">Java Optimized Solution (Recommended)</option>
+                  <option value="brute">Java Brute Force Solution</option>
+                </select>
+                <button class="btn btn-secondary btn-sm" id="btn-copy-code">📋 Copy Code</button>
+              </div>
+
+              <div class="code-viewer-container">
+                <div class="code-viewer-header">
+                  <span class="code-lang-tag">Solution.java</span>
+                  <span style="font-size: 0.75rem; color: var(--accent-cyan); font-family: var(--font-mono);">Lines highlight in sync with animation</span>
+                </div>
+                <div class="code-lines-wrapper" id="code-lines-wrapper">
+                  <!-- Populated dynamically with line numbers & syntax highlighting -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 4: Interactive Quiz -->
+            <div id="tab-quiz" class="tab-pane">
+              <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Tab 5: Personal Notes -->
+            <div id="tab-notes" class="tab-pane">
+              <div class="form-group">
+                <label class="form-label" for="user-question-notes">Your Study Notes & Key Insights</label>
+                <textarea id="user-question-notes" class="form-control" style="min-height: 180px;" placeholder="Write down your observations, edge cases, pointer tricks, or interview takeaways for this problem..."></textarea>
+              </div>
+              <button class="btn btn-primary btn-sm" id="btn-save-notes">💾 Save Notes to Account</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel: Visualization Studio -->
+        <div class="workspace-right-panel">
+          <div class="studio-card">
+            
+            <div class="studio-top-bar">
+              <div class="studio-title-group">
+                <h3 class="studio-title">
+                  <span>Visual Execution Studio</span>
+                  <span class="live-indicator"><span class="pulse-dot"></span> Live</span>
+                </h3>
+              </div>
+
+              <!-- View Mode Switcher Toolbar -->
+              <div class="studio-view-toolbar" style="margin-bottom: 0;">
+                <div class="view-mode-group">
+                  <button class="view-mode-btn active" data-mode="split" id="btn-mode-split" title="Side-by-side Data Structure & Algorithm Flowchart">
+                    <span>⚡</span> Split View
+                  </button>
+                  <button class="view-mode-btn" data-mode="ds" id="btn-mode-ds" title="Data Structure Stage Only">
+                    <span>📊</span> Data Structure
+                  </button>
+                  <button class="view-mode-btn" data-mode="flowchart" id="btn-mode-flowchart" title="Interactive Logic Flowchart Only">
+                    <span>🔀</span> Flowchart
+                  </button>
+                </div>
+                <button class="btn btn-outline btn-sm" id="btn-expand-studio" title="Expand studio to full container width" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+                  <span>⛶</span> <span id="expand-studio-label">Expand</span>
+                </button>
+                <button class="btn btn-outline btn-sm" id="btn-toggle-custom-input" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+                  ⚙ Custom Input
+                </button>
+              </div>
+            </div>
+
+            <!-- Live Execution Evaluator Strip (HUD) -->
+            <div class="evaluator-strip" id="evaluator-strip">
+              <div class="eval-left">
+                <span class="eval-badge-step" id="eval-step-badge">STEP 1</span>
+                <span class="eval-badge-line" id="eval-line-badge">Line 4</span>
+              </div>
+              <div class="eval-center">
+                <div class="eval-expr-row">
+                  <span class="eval-expr-label">Operation:</span>
+                  <span class="eval-expr-text" id="eval-expr-text">Initializing execution...</span>
+                </div>
+                <div class="eval-decision-row">
+                  <span class="eval-decision-label">Decision Flow:</span>
+                  <span class="eval-decision-text" id="eval-decision-text">Checking entry conditions...</span>
+                </div>
+              </div>
+              <div class="eval-right">
+                <div class="eval-flow-indicator" id="eval-flow-indicator">
+                  <span class="eval-flow-pulse"></span>
+                  <span id="eval-flow-node-title">Start Node</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Custom Input Bar (Collapsible) -->
+            <div class="custom-input-bar" id="custom-input-bar-ws" style="display: none;">
+              <div style="flex: 1; min-width: 160px;">
+                <label class="form-label" style="font-size: 0.75rem;">Array / Elements (comma separated):</label>
+                <input type="text" id="custom-input-array" class="form-control" placeholder="e.g. 2, 7, 11, 15" style="padding: 0.4rem 0.65rem; font-size: 0.85rem;">
+              </div>
+              <div style="width: 100px;">
+                <label class="form-label" style="font-size: 0.75rem;">Target (optional):</label>
+                <input type="number" id="custom-input-target" class="form-control" placeholder="9" style="padding: 0.4rem 0.65rem; font-size: 0.85rem;">
+              </div>
+              <div style="align-self: flex-end;">
+                <button class="btn btn-primary btn-sm" id="btn-run-custom-input">Simulate</button>
+              </div>
+            </div>
+
+            <!-- Stage Split Wrapper: Dynamic Visual Representation + Flowchart -->
+            <div class="stage-split-wrapper mode-split" id="stage-split-wrapper">
+              <div class="stage-canvas" id="stage-canvas">
+                <!-- Renderers draw arrays, lists, stacks, trees, or DP tables here -->
+              </div>
+              <div class="stage-flowchart" id="stage-flowchart">
+                <!-- FlowchartEngine renders interactive algorithm logic flowchart here -->
+              </div>
+            </div>
+
+            <!-- Playback Controls Bar -->
+            <div class="visualizer-controls-bar">
+              <div class="scrubber-wrapper">
+                <span id="step-counter" class="step-counter-text">Step 1 / 1</span>
+                <div class="scrubber-track" id="scrubber-track" title="Click anywhere along timeline to jump to step">
+                  <div class="scrubber-fill" id="scrubber-fill"></div>
+                </div>
+              </div>
+
+              <div class="controls-actions-row">
+                <div class="button-group-controls">
+                  <button class="btn btn-secondary btn-icon" id="btn-step-reset" title="Reset to start [R]">|◀◀</button>
+                  <button class="btn btn-secondary btn-icon" id="btn-step-prev" title="Previous step [Left Arrow]">◀</button>
+                  <button class="btn btn-primary" id="btn-play-pause" title="Play or Pause animation [Spacebar]">
+                    <span>▶</span> Play
+                  </button>
+                  <button class="btn btn-secondary btn-icon" id="btn-step-next" title="Next step [Right Arrow]">▶</button>
+                </div>
+
+                <div class="speed-control-group">
+                  <span>Speed:</span>
+                  <input type="range" id="speed-slider" class="speed-slider" min="0.25" max="3" step="0.25" value="1">
+                  <span id="speed-val-label" style="font-family: var(--font-mono); font-weight: 700; width: 32px;">1.0x</span>
+                </div>
+
+                <div class="shortcuts-hint">
+                  <span class="kbd-key">Space</span> Play/Pause &nbsp;
+                  <span class="kbd-key">←</span> <span class="kbd-key">→</span> Step
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Dry Run Explanation Card -->
+          <div class="narrative-card info" id="narrative-card">
+            <div class="narrative-icon">💡</div>
+            <div class="narrative-body">
+              <div class="narrative-step-label">Step 1 of 1</div>
+              <div class="narrative-text">Initializing algorithm execution...</div>
+            </div>
+          </div>
+
+          <!-- Variable Inspector Panel -->
+          <div class="variable-inspector-panel">
+            <div class="inspector-header">
+              <span>Variable Watcher</span>
+              <span style="font-size: 0.72rem; color: var(--accent-cyan);">Real-Time Memory State</span>
+            </div>
+            <div class="variables-grid" id="variables-grid">
+              <!-- Dynamically populated variable badges -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         VIEW 3: VISUALIZER LAB (CUSTOM ALGORITHM PLAYGROUND)
+         ========================================================================= -->
+    <section id="view-sandbox" class="view-section section" style="display: none;">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+          <h2 style="font-size: 2.2rem; margin-bottom: 0.6rem;">Algorithmic <span class="brand-gradient">Sandbox Lab</span></h2>
+          <p style="color: var(--text-secondary);">Experiment freely with your own custom datasets. Generate animated dry runs on demand.</p>
+        </div>
+
+        <div class="filter-bar">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Algorithm Template:</label>
+              <select id="sandbox-algo-type" class="form-control">
+                <option value="TWO_SUM">Two Sum (Two Pointer on Sorted Array)</option>
+                <option value="BINARY_SEARCH">Binary Search (Sorted Array)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Target Value:</label>
+              <input type="number" id="sandbox-target" class="form-control" value="12">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Custom Integer Array (sorted in ascending order):</label>
+            <input type="text" id="sandbox-array" class="form-control" value="2, 4, 7, 9, 12, 15, 20">
+          </div>
+
+          <div style="text-align: right;">
+            <button class="btn btn-primary" id="btn-sandbox-run">Launch Interactive Simulation &#10140;</button>
+          </div>
+        </div>
+
+        <div id="sandbox-studio-container" style="display: none; margin-top: 2rem;">
+          <!-- Dynamically mounts studio when clicked -->
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         VIEW 4: QUIZZES HUB
+         ========================================================================= -->
+    <section id="view-quizzes" class="view-section section" style="display: none;">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <h2 style="font-size: 2.2rem; margin-bottom: 0.6rem;">Algorithm <span class="brand-gradient">Mastery Quizzes</span></h2>
+        <p style="color: var(--text-secondary);">Test your conceptual understanding of data structures, algorithmic invariants, and complexity limits.</p>
+      </div>
+
+      <div class="questions-grid" id="quizzes-hub-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         VIEW 5: STUDENT LEARNING DASHBOARD
+         ========================================================================= -->
+    <section id="view-dashboard" class="view-section section" style="display: none;">
+      <div style="margin-bottom: 2rem;">
+        <h2 style="font-size: 2rem; margin-bottom: 0.4rem;">Learning <span class="brand-gradient">Progress Dashboard</span></h2>
+        <p style="color: var(--text-secondary);">Track your solved questions, topic proficiencies, and review saved bookmarks.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        
+        <!-- Overall Solved Card -->
+        <div class="hero-stat-card" style="text-align: left; padding: 1.5rem;">
+          <div style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 0.5rem;">Total Problems Solved</div>
+          <div style="font-size: 2.4rem; font-weight: 800; color: #fff; margin-bottom: 0.75rem;">
+            <span id="dash-total-solved">0</span> / <span id="dash-total-questions" style="color: var(--text-muted); font-size: 1.5rem;">16</span>
+          </div>
+          <div style="height: 8px; background: var(--bg-surface); border-radius: var(--radius-full); overflow: hidden; margin-bottom: 0.5rem;">
+            <div id="dash-pct-bar" style="height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-emerald), var(--accent-cyan)); border-radius: var(--radius-full);"></div>
+          </div>
+          <div id="dash-pct-text" style="font-size: 0.82rem; color: var(--accent-cyan); font-family: var(--font-mono);">0% Completed</div>
+        </div>
+
+        <!-- Difficulty Distribution -->
+        <div class="hero-stat-card" style="text-align: left; padding: 1.5rem;">
+          <div style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; margin-bottom: 1rem;">Difficulty Breakdown</div>
+          
+          <div style="margin-bottom: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.25rem;">
+              <span style="color: #34d399; font-weight: 600;">Easy</span>
+              <span id="dash-easy-solved" style="font-family: var(--font-mono)">0 / 0</span>
+            </div>
+            <div style="height: 6px; background: var(--bg-surface); border-radius: var(--radius-full); overflow: hidden;">
+              <div id="dash-easy-bar" style="height: 100%; width: 0%; background: var(--accent-emerald);"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.25rem;">
+              <span style="color: #fbbf24; font-weight: 600;">Medium</span>
+              <span id="dash-medium-solved" style="font-family: var(--font-mono)">0 / 0</span>
+            </div>
+            <div style="height: 6px; background: var(--bg-surface); border-radius: var(--radius-full); overflow: hidden;">
+              <div id="dash-medium-bar" style="height: 100%; width: 0%; background: var(--accent-amber);"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.25rem;">
+              <span style="color: #fb7185; font-weight: 600;">Hard</span>
+              <span id="dash-hard-solved" style="font-family: var(--font-mono)">0 / 0</span>
+            </div>
+            <div style="height: 6px; background: var(--bg-surface); border-radius: var(--radius-full); overflow: hidden;">
+              <div id="dash-hard-bar" style="height: 100%; width: 0%; background: var(--accent-rose);"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Topic Progress Breakdown -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
+        <h3 style="font-size: 1.2rem; margin-bottom: 1.25rem;">Progress by Topic</h3>
+        <div id="dash-categories-list">
+          <!-- Dynamically populated progress bars per topic -->
+        </div>
+      </div>
+
+      <!-- Bookmarked Questions -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.5rem;">
+        <h3 style="font-size: 1.2rem; margin-bottom: 1.25rem;">★ Bookmarked Questions</h3>
+        <div id="dash-bookmarks-list">
+          <!-- Dynamically populated bookmarks -->
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         VIEW 6: ADMIN MANAGEMENT PORTAL
+         ========================================================================= -->
+    <section id="view-admin" class="view-section section" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+          <h2 style="font-size: 2rem; margin-bottom: 0.4rem;">Admin <span class="brand-gradient">Control Panel</span></h2>
+          <p style="color: var(--text-secondary);">Manage DSA question catalog, visualization data, and system configurations.</p>
+        </div>
+        <button class="btn btn-primary" id="btn-admin-new-question">+ Add New Question</button>
+      </div>
+
+      <!-- Admin Stats Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+        <div class="hero-stat-card">
+          <div class="hero-stat-value" id="admin-stat-questions">0</div>
+          <div class="hero-stat-label">Total Questions</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-value" id="admin-stat-users">0</div>
+          <div class="hero-stat-label">Total Users</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-value" id="admin-stat-categories">0</div>
+          <div class="hero-stat-label">DSA Categories</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-value" id="admin-stat-quizzes">0</div>
+          <div class="hero-stat-label">Quiz Submissions</div>
+        </div>
+      </div>
+
+      <!-- Questions Data Table -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden;">
+        <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-subtle); font-weight: 700;">
+          DSA Catalog Management
+        </div>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+              <tr style="background: rgba(15, 23, 42, 0.8); border-bottom: 1px solid var(--border-subtle); color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">
+                <th style="padding: 0.85rem 1rem;">ID</th>
+                <th style="padding: 0.85rem 1rem;">Title</th>
+                <th style="padding: 0.85rem 1rem;">Difficulty</th>
+                <th style="padding: 0.85rem 1rem;">Category</th>
+                <th style="padding: 0.85rem 1rem;">Visualizer</th>
+                <th style="padding: 0.85rem 1rem; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-questions-tbody">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       MODALS
+       ========================================================================= -->
+
+  <!-- 1. Authentication Modal (Login / Register) -->
+  <div class="modal-overlay" id="modal-auth">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Sign In / Register</h3>
+        <button class="modal-close" onclick="closeModal('modal-auth')">&times;</button>
+      </div>
+
+      <!-- Auth Tabs -->
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem;">
+        <button class="btn btn-outline btn-sm active" id="tab-btn-login">Sign In</button>
+        <button class="btn btn-outline btn-sm" id="tab-btn-register">Create Account</button>
+      </div>
+
+      <!-- Quick Fill Buttons for immediate evaluation -->
+      <div style="background: rgba(6, 182, 212, 0.08); border: 1px dashed rgba(6, 182, 212, 0.3); border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1.25rem;">
+        <div style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.4rem; text-transform: uppercase;">Quick Demo Fill:</div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-secondary btn-sm" type="button" id="btn-quick-admin">👑 Admin Demo</button>
+          <button class="btn btn-secondary btn-sm" type="button" id="btn-quick-student">🎓 Student Demo</button>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="form-auth-login">
+        <div class="form-group">
+          <label class="form-label" for="auth-login-username">Username</label>
+          <input type="text" id="auth-login-username" class="form-control" required placeholder="admin or student">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="auth-login-password">Password</label>
+          <input type="password" id="auth-login-password" class="form-control" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">Sign In</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="form-auth-register" style="display: none;">
+        <div class="form-group">
+          <label class="form-label" for="auth-reg-username">Username</label>
+          <input type="text" id="auth-reg-username" class="form-control" required placeholder="Choose a username">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="auth-reg-email">Email Address</label>
+          <input type="email" id="auth-reg-email" class="form-control" required placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="auth-reg-password">Password (min 4 chars)</label>
+          <input type="password" id="auth-reg-password" class="form-control" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Admin Question Edit / Create Modal -->
+  <div class="modal-overlay" id="modal-admin-question">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="admin-modal-title">Question Editor</h3>
+        <button class="modal-close" onclick="closeModal('modal-admin-question')">&times;</button>
+      </div>
+
+      <form id="form-admin-question">
+        <input type="hidden" id="admin-form-question-id">
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Question Title</label>
+            <input type="text" id="admin-form-title" class="form-control" required placeholder="e.g. Two Sum">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Slug (URL friendly)</label>
+            <input type="text" id="admin-form-slug" class="form-control" placeholder="e.g. two-sum">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Category / Topic</label>
+            <select id="admin-form-category" class="form-control" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Difficulty</label>
+            <select id="admin-form-difficulty" class="form-control" required>
+              <option value="EASY">EASY</option>
+              <option value="MEDIUM">MEDIUM</option>
+              <option value="HARD">HARD</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Problem Statement</label>
+          <textarea id="admin-form-statement" class="form-control" required rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Constraints</label>
+          <textarea id="admin-form-constraints" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Examples JSON</label>
+          <textarea id="admin-form-examples" class="form-control" rows="2" style="font-family: var(--font-mono); font-size: 0.8rem;"></textarea>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Brute Force Time & Space</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="text" id="admin-form-brute-time" class="form-control" placeholder="O(n^2)">
+              <input type="text" id="admin-form-brute-space" class="form-control" placeholder="O(1)">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Optimized Time & Space</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="text" id="admin-form-opt-time" class="form-control" placeholder="O(n)">
+              <input type="text" id="admin-form-opt-space" class="form-control" placeholder="O(1)">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Brute Force Approach Explanation</label>
+            <textarea id="admin-form-brute-app" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Optimized Approach Explanation</label>
+            <textarea id="admin-form-opt-app" class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Optimized Java Solution Code</label>
+            <textarea id="admin-form-opt-code" class="form-control" rows="6" style="font-family: var(--font-mono); font-size: 0.82rem;"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Brute Force Java Solution Code</label>
+            <textarea id="admin-form-brute-code" class="form-control" rows="6" style="font-family: var(--font-mono); font-size: 0.82rem;"></textarea>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Visualizer Engine Type</label>
+            <select id="admin-form-vis-type" class="form-control">
+              <option value="ARRAY_TWO_POINTER">Array Two Pointer</option>
+              <option value="SLIDING_WINDOW">Sliding Window</option>
+              <option value="BINARY_SEARCH">Binary Search</option>
+              <option value="SORTING">Sorting</option>
+              <option value="LINKED_LIST">Linked List</option>
+              <option value="STACK">Stack</option>
+              <option value="QUEUE">Queue</option>
+              <option value="TREE_TRAVERSAL">Tree Traversal</option>
+              <option value="GRAPH_BFS_DFS">Graph BFS / DFS</option>
+              <option value="RECURSION_TREE">Recursion Tree</option>
+              <option value="DP_TABLE">Dynamic Programming Table</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Default Input JSON</label>
+            <input type="text" id="admin-form-def-input" class="form-control" style="font-family: var(--font-mono);">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <label class="form-label" style="margin-bottom: 0;">Visualization Steps JSON (Animation Timeline)</label>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-auto-gen-modal-steps" style="font-size: 0.78rem; padding: 2px 8px; color: var(--accent-cyan); border-color: rgba(6,182,212,0.4);">
+              ⚡ Auto-Generate Steps from Input
+            </button>
+          </div>
+          <textarea id="admin-form-vis-steps" class="form-control" rows="6" style="font-family: var(--font-mono); font-size: 0.8rem;" placeholder="Click 'Auto-Generate Steps' or enter step-by-step array timeline"></textarea>
+        </div>
+
+        <div style="text-align: right; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-admin-question')">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="margin-left: 0.5rem;">Save Question</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Standalone Quiz Runner Modal -->
+  <div class="modal-overlay" id="modal-quiz-runner">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">Algorithmic Assessment</h3>
+        <button class="modal-close" onclick="closeModal('modal-quiz-runner')">&times;</button>
+      </div>
+      <div id="modal-quiz-runner-body"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-text">
+        &copy; 2026 <strong>AlgoPulse</strong>. Interactive Animated DSA Platform. Built with Java, Spring Boot, MySQL, and modern Vanilla Web Tech.
+      </div>
+      <div style="display: flex; gap: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+        <span>Java 21</span> •
+        <span>Spring Boot 3.3.4</span> •
+        <span>MySQL 8.0</span> •
+        <span>JWT Security</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js?v=1.0.8"></script>
+  <script src="js/visualizer/Renderers.js?v=1.0.8"></script>
+  <script src="js/visualizer/VisualizerEngine.js?v=1.0.8"></script>
+  <script src="js/app.js?v=1.0.8"></script>
+</body>
+</html>
